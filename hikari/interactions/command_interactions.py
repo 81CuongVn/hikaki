@@ -181,15 +181,15 @@ class BaseCommandInteraction(base_interactions.PartialInteraction):
     guild_id: typing.Optional[snowflakes.Snowflake] = attr.field(eq=False, hash=False, repr=True)
     """ID of the guild this command interaction event was triggered in.
 
-    This will be `builtins.None` for command interactions triggered in DMs.
+    This will be `None` for command interactions triggered in DMs.
     """
 
     guild_locale: typing.Optional[str] = attr.field(eq=False, hash=False, repr=True)
     """The preferred language of the guild this command interaction was triggered in.
 
-    This will be `builtins.None` for command interactions triggered in DMs.
+    This will be `None` for command interactions triggered in DMs.
 
-    !!! note
+    .. note::
         This value can usually only be changed if `COMMUNITY` is in `hikari.guilds.Guild.features`
         for the guild and will otherwise default to `en-US`.
     """
@@ -197,9 +197,9 @@ class BaseCommandInteraction(base_interactions.PartialInteraction):
     member: typing.Optional[base_interactions.InteractionMember] = attr.field(eq=False, hash=False, repr=True)
     """The member who triggered this command interaction.
 
-    This will be `builtins.None` for command interactions triggered in DMs.
+    This will be `None` for command interactions triggered in DMs.
 
-    !!! note
+    .. note::
         This member object comes with the extra field `permissions` which
         contains the member's permissions in the current channel.
     """
@@ -263,15 +263,15 @@ class BaseCommandInteraction(base_interactions.PartialInteraction):
     def get_channel(self) -> typing.Optional[channels.TextableGuildChannel]:
         """Get the guild channel this was triggered in from the cache.
 
-        !!! note
-            This will always return `builtins.None` for interactions triggered
+        .. note::
+            This will always return `None` for interactions triggered
             in a DM channel.
 
         Returns
         -------
         typing.Optional[hikari.channels.TextableGuildChannel]
             The object of the guild channel that was found in the cache or
-            `builtins.None`.
+            `None`.
         """
         if isinstance(self.app, traits.CacheAware):
             channel = self.app.cache.get_guild_channel(self.channel_id)
@@ -320,7 +320,7 @@ class BaseCommandInteraction(base_interactions.PartialInteraction):
         Returns
         -------
         typing.Optional[hikari.guilds.RESTGuild]
-            Object of the guild this interaction happened in or `builtins.None`
+            Object of the guild this interaction happened in or `None`
             if this occurred within a DM channel.
 
         Raises
@@ -356,7 +356,7 @@ class BaseCommandInteraction(base_interactions.PartialInteraction):
         Returns
         -------
         typing.Optional[hikari.guilds.GatewayGuild]
-            The object of the guild if found, else `builtins.None`.
+            The object of the guild if found, else `None`.
         """
         if self.guild_id and isinstance(self.app, traits.CacheAware):
             return self.app.cache.get_guild(self.guild_id)
@@ -378,7 +378,7 @@ class CommandInteraction(BaseCommandInteraction, base_interactions.MessageRespon
     def build_response(self) -> special_endpoints.InteractionMessageBuilder:
         """Get a message response builder for use in the REST server flow.
 
-        !!! note
+        .. note::
             For interactions received over the gateway
             `CommandInteraction.create_initial_response` should be used to set
             the interaction response message.
@@ -405,12 +405,12 @@ class CommandInteraction(BaseCommandInteraction, base_interactions.MessageRespon
     def build_deferred_response(self) -> special_endpoints.InteractionDeferredBuilder:
         """Get a deferred message response builder for use in the REST server flow.
 
-        !!! note
+        .. note::
             For interactions received over the gateway
             `CommandInteraction.create_initial_response` should be used to set
             the interaction response message.
 
-        !!! note
+        .. note::
             Unlike `hikari.api.special_endpoints.InteractionMessageBuilder`,
             the result of this call can be returned as is without any modifications
             being made to it.
@@ -436,7 +436,7 @@ class AutocompleteInteraction(BaseCommandInteraction):
     ) -> special_endpoints.InteractionAutocompleteBuilder:
         """Get a message response builder for use in the REST server flow.
 
-        !!! note
+        .. note::
             For interactions received over the gateway
             `AutocompleteInteraction.create_response` should be used to set
             the interaction response.
